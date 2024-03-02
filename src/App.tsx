@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Container, Spinner } from "react-bootstrap";
+import { Route, Routes } from "react-router-dom";
+
+import { Suspense, lazy } from "react";
+
+import { ROUTES } from "@/config/routes.ts";
+
+import "./App.css";
+import { Header } from "./components/Header";
+
+const LoginPage = lazy(() => import("@/pages/LoginPage/LoginPage.tsx"));
+const MainPage = lazy(() => import("@/pages/MainPage/MainPage.tsx"));
+const RegisterPage = lazy(
+  () => import("@/pages/RegisterPage/RegisterPage.tsx"),
+);
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <Suspense
+        fallback={
+          <main>
+            <Container
+              className={
+                "min-vh-100 d-flex justify-content-center align-items-center"
+              }
+            >
+              <Spinner animation={"border"} role={"status"} />
+            </Container>
+          </main>
+        }
+      >
+        <Routes>
+          <Route path={ROUTES.HOME} element={<MainPage />} />
+          <Route path={ROUTES.AUTH.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.AUTH.REGISTER} element={<RegisterPage />} />
+        </Routes>
+      </Suspense>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

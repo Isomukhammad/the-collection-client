@@ -1,0 +1,22 @@
+{
+  "Home": "Главная",
+  "Collections": "Коллекции",
+  "Dark Mode": "Темный режим",
+  "Login": "Войти",
+  "Search": "Поиск",
+  "Don't have an account?": "Нет аккаунта?",
+  "Register": "Зарегистрироваться",
+  "Submit": "Отправить",
+  "Password is required": "Пароль обязателен",
+  "Password": "Пароль",
+  "Enter email": "Введите почту",
+  "Entered value does not match email format": "Введенное значение не соответствует формату электронной почты",
+  "Email is required": "Требуется адрес электронной почты",
+  "Email address": "Адрес электронной почты",
+  "Name": "Имя",
+  "Name is required": "Имя обязательно",
+  "Your name": "Ваше имя",
+  "Confirm Password": "Подтвердите пароль",
+  "Confirmation of password is required": "Требуется подтверждение пароля",
+  "Already have an account?": "Уже есть аккаунт?"
+}
