@@ -1,20 +1,22 @@
 import { JSX, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+
+import { useAuth } from "@/context/AuthContext";
 
 import { baseAxios } from "@/utils/axios.ts";
 
 type LoginForm = {
-  name: string;
   email: string;
   password: string;
-  confirmPassword: string;
 };
 
-const RegisterPage = (): JSX.Element => {
+const LoginPage = (): JSX.Element => {
   const { t } = useTranslation();
+  const { setBearerToken } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -24,21 +26,21 @@ const RegisterPage = (): JSX.Element => {
     formState: { errors },
   } = useForm<LoginForm>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
   const onSubmit: SubmitHandler<LoginForm> = async (data): Promise<void> => {
-    setError("");
     setIsLoading(true);
     try {
-      const res = await baseAxios.post("/users/register", data);
-      console.log(res);
+      const res = await baseAxios.post("/auth/login", data);
+      const { token } = res.data;
+      setBearerToken(token);
+      setError("");
+      toast.success(t("You have successfully logged in!"));
     } catch (error: any) {
-      console.error(error);
+      toast.error(t("Failed to login!"));
       if (error && error.response && error.response.data.message) {
         setError(error.response.data.message);
       }
@@ -52,22 +54,9 @@ const RegisterPage = (): JSX.Element => {
       <Container>
         <Row className="justify-content-md-center align-items-center min-vh-100">
           <Col lg="5" className="p-3 rounded">
-            <h1 className={"text-center mb-3"}>{t("Register")}</h1>
+            <h1 className={"text-center mb-3"}>{t("Login")}</h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              {error && <p className={"text-danger"}>{error}</p>}
-              <Form.Group className="mb-3" controlId="formBasicName">
-                <Form.Label>{t("Name")}</Form.Label>
-                <Form.Control
-                  type="text"
-                  {...register("name", {
-                    required: t("Name is required"),
-                  })}
-                  placeholder={t("Your name")}
-                />
-                {errors.name && (
-                  <p className={"text-danger"}>{errors.name.message}</p>
-                )}
-              </Form.Group>
+              {error && <p className={"text-danger fw-medium"}>{error}</p>}
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>{t("Email address")}</Form.Label>
                 <Form.Control
@@ -91,26 +80,15 @@ const RegisterPage = (): JSX.Element => {
                   type="password"
                   {...register("password", {
                     required: t("Password is required"),
+                    minLength: {
+                      value: 6,
+                      message: t("Password must have at least 6 characters"),
+                    },
                   })}
                   placeholder={t("Password")}
                 />
                 {errors.password && (
                   <p className={"text-danger"}>{errors.password.message}</p>
-                )}
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-                <Form.Label>{t("Confirm Password")}</Form.Label>
-                <Form.Control
-                  type="password"
-                  {...register("confirmPassword", {
-                    required: "Confirmation of password is required",
-                  })}
-                  placeholder={t("Confirm Password")}
-                />
-                {errors.confirmPassword && (
-                  <p className={"text-danger"}>
-                    {errors.confirmPassword.message}
-                  </p>
                 )}
               </Form.Group>
               <Button
@@ -123,8 +101,8 @@ const RegisterPage = (): JSX.Element => {
               </Button>
             </Form>
             <p className={"text-center mt-3 fw-medium"}>
-              {t("Already have an account?")}{" "}
-              <Link to={"/register"}>{t("Login")}</Link>
+              {t("Don't have an account?")}{" "}
+              <Link to={"/register"}>{t("Register")}</Link>
             </p>
           </Col>
         </Row>
@@ -133,4 +111,4 @@ const RegisterPage = (): JSX.Element => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
