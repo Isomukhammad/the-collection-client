@@ -38,11 +38,12 @@ const RegisterPage = (): JSX.Element => {
     setError("");
     setIsLoading(true);
     try {
-      await baseAxios.post("/auth/register", {
+      const res = await baseAxios.post("/auth/register", {
         username: data.username,
         email: data.email,
         password: data.password,
       });
+      console.log(res);
       toast.success(t("You have successfully registered!"));
       navigate("/login");
     } catch (error: any) {

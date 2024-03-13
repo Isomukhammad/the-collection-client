@@ -12,3 +12,12 @@ export interface IUserAdmin extends IUser {
   isBlocked: boolean;
   isDeleted: boolean;
 }
+
+export interface ICollection {
+  id: number;
+  name: string;
+  description: string;
+  topic: string;
+  image: string;
+  authorId: number;
+}

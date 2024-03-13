@@ -43,8 +43,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const checkUser = async (): Promise<void> => {
     try {
-      console.log("checkUser");
-      const user = await baseAxios.get("/profile");
+      const user = await baseAxios.get("/users/info");
       setUser(user.data);
     } catch (error: any) {
       console.error(error.response.data.message);

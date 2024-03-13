@@ -3,7 +3,16 @@ export const ROUTES = {
   AUTH: {
     LOGIN: "/login",
     REGISTER: "/register",
-    PROFILE: "/profile",
+    PROFILE: {
+      MAIN: "/profile",
+      EDIT: "/profile/edit",
+    },
     ADMIN: "/admin",
+  },
+  COLLECTIONS: {
+    MAIN: "/collections",
+    COLLECTION: "/collections/:id",
+    USERCOLLECTIONS: "/collections/user/:id",
+    ADDCOLLECTION: "/collections/add",
   },
 };

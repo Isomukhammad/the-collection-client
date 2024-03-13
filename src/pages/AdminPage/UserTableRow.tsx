@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 
 import { useAuth } from "@/context/AuthContext.tsx";
 
+import UserTableModal from "@/pages/AdminPage/EditUserModal.tsx";
+
 import { IUserAdmin } from "@/types.ts";
 import { baseAxios } from "@/utils/axios.ts";
 
@@ -79,14 +81,7 @@ const UserTableRow = ({
       <td>{user.role}</td>
       <td>{user.isBlocked ? t("False") : t("True")}</td>
       <td className={"d-flex gap-2"}>
-        <Button
-          type={"button"}
-          variant={"info"}
-          disabled={isAction}
-          onClick={() => console.log("Edit user")}
-        >
-          {t("Edit")}
-        </Button>
+        <UserTableModal user={user} isAction={isAction} />
         <Button
           type={"button"}
           variant={user.isBlocked ? "success" : "warning"}
