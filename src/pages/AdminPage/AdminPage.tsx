@@ -2,7 +2,7 @@ import { JSX } from "react";
 import { Container } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-import UsersTable from "@/pages/AdminPage/UsersTable.tsx";
+import UsersTable from "@/components/tables/UsersTable";
 
 const AdminPage = (): JSX.Element => {
   const { t } = useTranslation();

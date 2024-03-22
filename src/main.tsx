@@ -3,11 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { StrictMode } from "react";
 import { Container } from "react-bootstrap";
 import ReactDOM from "react-dom/client";
-import {
-  QueryClient,
-  QueryClientConfig,
-  QueryClientProvider,
-} from "react-query";
+import { QueryClient, QueryClientConfig, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 
 import { AuthProvider } from "@/context/AuthContext.tsx";
@@ -24,7 +20,7 @@ const queryConfig: QueryClientConfig = {
     queries: {
       retry: 3,
       cacheTime: 5 * 60 * 1000,
-      staleTime: 5 * 60 * 1000,
+      // staleTime: 5 * 60 * 1000,
       queryFn: async ({ queryKey }) => {
         const url = queryKey[0];
         if (typeof url === "string") {

@@ -18,6 +18,7 @@ export interface ICollection {
   name: string;
   description: string;
   topic: string;
-  image: string;
+  img: string;
   authorId: number;
+  createdAt: string;
 }

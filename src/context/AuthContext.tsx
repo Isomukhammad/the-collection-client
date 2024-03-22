@@ -1,12 +1,6 @@
 import Cookies from "js-cookie";
 
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { IUser } from "@/types.ts";
@@ -14,6 +8,7 @@ import { baseAxios } from "@/utils/axios.ts";
 
 interface AuthContext {
   userLoading: boolean;
+  // eslint-disable-next-line no-unused-vars
   setBearerToken: (token: string) => void;
   user: IUser | null;
   checkUser: () => Promise<void>;
