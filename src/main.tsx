@@ -7,11 +7,12 @@ import { QueryClient, QueryClientConfig, QueryClientProvider } from "react-query
 import { BrowserRouter } from "react-router-dom";
 
 import { AuthProvider } from "@/context/AuthContext.tsx";
+import { ThemeProvider } from "@/context/ThemeContext.tsx";
 
 import { baseAxios } from "@/utils/axios.ts";
 
 import App from "./App.tsx";
-import { ErrorBoundary } from "./components/ErrorBoundary";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary.tsx";
 import "./i18n.ts";
 import "./index.css";
 
@@ -47,7 +48,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AuthProvider>
-            <App />
+            <ThemeProvider>
+              <App />
+            </ThemeProvider>
           </AuthProvider>
         </BrowserRouter>
       </QueryClientProvider>

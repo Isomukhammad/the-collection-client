@@ -6,6 +6,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext.tsx";
 
 import { ROLES } from "@/config/roles.ts";
+import { ROUTES } from "@/config/routes";
 
 import HeaderLanguageSwitcher from "./HeaderLanguageSwitcher";
 import HeaderThemeSwitch from "./HeaderThemeSwitch";
@@ -34,7 +35,7 @@ const Header = (): JSX.Element => {
               <Nav className={"d-flex gap-3 align-items-lg-center"}>
                 <HeaderThemeSwitch />
                 <HeaderLanguageSwitcher />
-                <Link to={user ? "/profile" : "/login"} className={"btn btn-primary"}>
+                <Link to={user ? ROUTES.AUTH.PROFILE.MAIN : ROUTES.AUTH.LOGIN} className={"btn btn-primary"}>
                   {user ? t("Go to profile") : t("Login")}
                 </Link>
                 {user && user.role === ROLES.ADMIN && (

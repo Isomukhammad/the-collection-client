@@ -1,12 +1,12 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
-import { Theme } from "@/components/layout/Header/HeaderThemeSwitch";
+import { useTheme } from "@/context/ThemeContext.tsx";
 
 const HeaderThemeSwitch = (): JSX.Element => {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState<Theme>((localStorage.getItem("theme") as Theme) || "light");
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     localStorage.setItem("theme", theme);

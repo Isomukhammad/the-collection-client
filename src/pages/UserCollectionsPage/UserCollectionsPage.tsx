@@ -1,64 +1,75 @@
+import { AxiosError } from "axios";
+
 import { JSX } from "react";
-import { Card, Container, Spinner } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { useAuth } from "@/context/AuthContext.tsx";
+import CollectionCard from "@/components/cards/CollectionCard";
 
-import { ROUTES } from "@/config/routes.ts";
 import { ICollection } from "@/types.ts";
 
 const UserCollectionsPage = (): JSX.Element => {
+  const { id } = useParams();
+
   const { t } = useTranslation();
-  const { user } = useAuth();
 
   const {
     data: collections,
     isLoading: collectionsLoading,
-    isError: collectionsError,
-  } = useQuery<{ data: ICollection[] }>(`/collections?authorId=${user?.id}`);
+    error: collectionsError,
+  } = useQuery<
+    {
+      author: {
+        id: number;
+        username: string;
+      };
+      data: ICollection[];
+    },
+    AxiosError<{ message: string }>
+  >(`/collections?authorId=${id}`);
 
   if (collectionsLoading)
     return (
-      <div className={"d-flex mt-3 justify-content-center"}>
+      <Container as={"main"} className={"d-flex mt-5 justify-content-center"}>
         <Spinner animation={"border"} role={"status"} />
-      </div>
+      </Container>
     );
 
-  if (collectionsError) return <p className={"mt-3 text-danger"}>{t("Error while fetching data")}</p>;
-
-  console.log(collections);
+  if (collectionsError)
+    return (
+      <Container as={"main"} className={"mt-5"}>
+        <p className={"mt-3 text-danger fw-semibold"}>
+          {collectionsError?.response?.data?.message
+            ? collectionsError.response.data.message
+            : t("Error while fetching data")}
+        </p>
+      </Container>
+    );
 
   if (collections && !collections.data) return <p className={"mt-3 text-info"}>{t("Collections are empty")}</p>;
 
   return (
     <Container as={"main"} className={"my-5"}>
-      <h1>{t("UserCollections", { name: user?.username })}</h1>
+      <h1>{t("UserCollections", { name: collections?.author.username })}</h1>
       <div className={"row mt-3"}>
-        {collections!.data.map((collection) => {
-          return (
-            <div key={collection.id} className={"col-lg-3 col-md-4 col-sm-6 mb-3"}>
-              <Card>
-                <Card.Img
-                  src={collection.img || "/images/placeholder.webp"}
-                  alt={collection.name}
-                  className={"card-img-top"}
+        {collections?.data.length ? (
+          collections.data.map((collection) => {
+            return (
+              <div key={collection.id} className={"col-lg-3 col-md-4 col-sm-6 mb-3"}>
+                <CollectionCard
+                  id={collection.id}
+                  name={collection.name}
+                  img={collection.img}
+                  description={collection.description}
                 />
-                <Card.Body>
-                  <Card.Title>{collection.name}</Card.Title>
-                  <Card.Text className={"text-truncate"}>{collection.description}</Card.Text>
-                </Card.Body>
-                <Link
-                  to={ROUTES.COLLECTIONS.COLLECTION.replace(":id", collection.id.toString())}
-                  className={"btn btn-primary"}
-                >
-                  {t("View collection")}
-                </Link>
-              </Card>
-            </div>
-          );
-        })}
+              </div>
+            );
+          })
+        ) : (
+          <p className={"text-info fw-semibold"}>{t("Collections are empty")}</p>
+        )}
       </div>
     </Container>
   );

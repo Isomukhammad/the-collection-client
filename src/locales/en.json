@@ -1,13 +1,16 @@
 {
+  "Access denied": "Access denied",
   "Actions": "Actions",
   "Active": "Active",
   "Add Collection": "Add Collection",
   "Add collection": "Add collection",
+  "Add item": "Add item",
   "Add new": "Add new",
   "Add": "Add",
   "Admin panel": "Admin panel",
   "Admin": "Admin",
   "Already have an account?": "Already have an account?",
+  "Biggest collections": "Biggest collections",
   "Block": "Block",
   "Books": "Books",
   "Change password": "Change password",
@@ -80,5 +83,14 @@
   "View": "View",
   "You have successfully logged in!": "You have successfully logged in!",
   "You have successfully registered!": "You have successfully registered!",
-  "Your name": "Your name"
+  "Your name": "Your name",
+  "Optional text": "Optional text",
+  "Optional numbers": "Optional numbers",
+  "Optional dates": "Optional dates",
+  "Optional checkbox": "Optional checkbox",
+  "Tags": "Tags",
+  "Enter name": "Enter name",
+  "Enter value": "Enter value",
+  "Data is empty": "Data is empty",
+  "Last added items": "Last added items"
 }

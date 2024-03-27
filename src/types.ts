@@ -22,3 +22,28 @@ export interface ICollection {
   authorId: number;
   createdAt: string;
 }
+
+export interface ITag {
+  id: number;
+  name: string;
+}
+
+export interface IMeta {
+  total: number;
+  last_page: number;
+  current_page: number;
+}
+
+export interface IItem {
+  id: number;
+  name: string;
+  createdAt: string;
+  collectionId: number;
+  authorId: number;
+  author: {
+    username: string;
+  };
+  collection: {
+    name: string;
+  };
+}

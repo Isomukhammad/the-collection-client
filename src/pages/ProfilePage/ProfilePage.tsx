@@ -36,7 +36,10 @@ const ProfilePage = (): JSX.Element => {
         <div className={"d-flex justify-content-between align-items-center"}>
           <h2>{t("Collections")}</h2>
           <div className={"d-flex align-items-center gap-1"}>
-            <Link to={ROUTES.COLLECTIONS.USERCOLLECTIONS} className={"btn btn-outline-success"}>
+            <Link
+              to={ROUTES.COLLECTIONS.USERCOLLECTIONS.replace(":id", String(user?.id))}
+              className={"btn btn-outline-success"}
+            >
               {t("View all")}
             </Link>
             <Link to={ROUTES.COLLECTIONS.ADDCOLLECTION} className="btn btn-primary">

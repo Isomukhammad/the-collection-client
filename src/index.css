@@ -5,3 +5,24 @@ body {
 .max-width-34 {
   max-width: 34rem;
 }
+
+.dark__input-container {
+  color: white !important;
+}
+
+.text-ellipsis,
+.text-ellipsis-2,
+.text-ellipsis-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-ellipsis-2 {
+  -webkit-line-clamp: 2;
+}
+
+.text-ellipsis-3 {
+  -webkit-line-clamp: 3;
+}

@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext.tsx";
 
 import { AddCollectionFormFields } from "@/components/forms/AddCollectionForm";
 
+import { ROUTES } from "@/config/routes";
 import { baseAxios } from "@/utils/axios.ts";
 import { convertBase64 } from "@/utils/convert.ts";
 
@@ -54,8 +55,8 @@ const AddCollectionForm = (): JSX.Element => {
         image: imageUrl,
       });
       setError("");
+      redirect(ROUTES.AUTH.PROFILE.MAIN);
       await queryClient.invalidateQueries(`/collections?authorId=${user?.id}`);
-      redirect("/profile");
     } catch (error: any) {
       console.error(error);
       setError(error.response.data.message);

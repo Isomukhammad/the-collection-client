@@ -15,4 +15,9 @@ export const ROUTES = {
     USERCOLLECTIONS: "/collections/user/:id",
     ADDCOLLECTION: "/collections/add",
   },
+  ITEMS: {
+    ITEM: "/items/:id",
+    ITEMS: "/collections/:id/items",
+    ADDITEM: "/collections/:id/add",
+  },
 };

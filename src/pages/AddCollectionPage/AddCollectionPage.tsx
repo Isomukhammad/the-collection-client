@@ -8,7 +8,7 @@ const AddCollectionPage = (): JSX.Element => {
   const { t } = useTranslation();
 
   return (
-    <Container className={"my-5"}>
+    <Container as={"main"} className={"my-5"}>
       <h1>{t("Add Collection")}</h1>
       <AddCollectionForm />
     </Container>

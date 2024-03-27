@@ -1,13 +1,16 @@
 {
+  "Access denied": "Доступ запрещен",
   "Actions": "Действия",
   "Active": "Активный",
   "Add Collection": "Добавить коллекцию",
   "Add collection": "Добавить коллекцию",
+  "Add item": "Добавить элемент",
   "Add new": "Добавить",
   "Add": "Добавить",
   "Admin panel": "Админ панель",
   "Admin": "Админ",
   "Already have an account?": "Уже есть аккаунт?",
+  "Biggest collections": "Самые большие коллекции",
   "Block": "Заблокировать",
   "Books": "Книги",
   "Change password": "Изменить пароль",
@@ -80,5 +83,14 @@
   "View": "Посмотреть",
   "You have successfully logged in!": "Вы успешно вошли!",
   "You have successfully registered!": "Вы успешно зарегистрировались!",
-  "Your name": "Ваше имя"
+  "Your name": "Ваше имя",
+  "Optional text": "Опциональный текст",
+  "Optional numbers": "Опциональные числа",
+  "Optional dates": "Опциональные даты",
+  "Optional checkbox": "Опциональный чекбокс",
+  "Tags": "Теги",
+  "Enter name": "Введите имя",
+  "Enter value": "Введите значение",
+  "Data is empty": "Данные пусты",
+  "Last added items": "Последние добавленные элементы"
 }

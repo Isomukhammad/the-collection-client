@@ -11,6 +11,7 @@ import { ROUTES } from "@/config/routes.ts";
 
 import "./App.css";
 import { useAuth } from "./context/AuthContext";
+import AddItemPage from "./pages/AddItemPage";
 import { baseAxios } from "./utils/axios";
 
 const AddCollectionPage = lazy(() => import("@/pages/AddCollectionPage"));
@@ -70,15 +71,13 @@ function App() {
             path={ROUTES.AUTH.ADMIN}
             element={user && user.role === ROLES.ADMIN ? <AdminPage /> : <Navigate to={ROUTES.AUTH.LOGIN} />}
           />
-          <Route
-            path={ROUTES.COLLECTIONS.USERCOLLECTIONS}
-            element={user ? <UserCollectionsPage /> : <Navigate to={ROUTES.AUTH.LOGIN} />}
-          />
+          <Route path={ROUTES.COLLECTIONS.USERCOLLECTIONS} element={<UserCollectionsPage />} />
           <Route path={ROUTES.COLLECTIONS.COLLECTION} element={<SingleCollectionPage />} />
           <Route
             path={ROUTES.COLLECTIONS.ADDCOLLECTION}
             element={user ? <AddCollectionPage /> : <Navigate to={ROUTES.AUTH.LOGIN} />}
           />
+          <Route path={ROUTES.ITEMS.ADDITEM} element={user ? <AddItemPage /> : <Navigate to={ROUTES.AUTH.LOGIN} />} />
           <Route path={"*"} element={<ErrorPage />} />
         </Routes>
       </Suspense>
