@@ -1,7 +1,7 @@
 import classNames from "classnames";
 
 import { JSX } from "react";
-import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { BoxArrowRight, CollectionFill, Person, PersonFill } from "react-bootstrap-icons";
 import { useTranslation } from "react-i18next";
 import { Link, Outlet } from "react-router-dom";
