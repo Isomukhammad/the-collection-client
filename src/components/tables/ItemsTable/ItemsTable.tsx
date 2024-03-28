@@ -50,8 +50,8 @@ const ItemsTable = ({ link, title }: ItemsTableProps): JSX.Element => {
               <tr key={item.id}>
                 <th scope="row">{index + 1}</th>
                 <td>{item.name}</td>
-                <td>{item.collection.name}</td>
-                <td>{item.author.username}</td>
+                <td>{item?.collection && item?.collection.name}</td>
+                <td>{item?.author && item?.author.username}</td>
                 <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                 <td>
                   <Link to={ROUTES.ITEMS.ITEM.replace(":id", String(item.id))} className={"btn btn-primary"}>
