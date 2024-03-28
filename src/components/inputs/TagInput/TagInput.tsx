@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Controller } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 
 import { useTheme } from "@/context/ThemeContext.tsx";
+
+import { TagInputProps } from "@/components/inputs/TagInput";
 
 import { ITag } from "@/types";
 import { baseAxios } from "@/utils/axios";
@@ -29,12 +32,8 @@ const customStyles = {
   }),
 };
 
-const TagInput = (): JSX.Element => {
+const TagInput = ({ control }: TagInputProps): JSX.Element => {
   const { theme } = useTheme();
-  const [selectedOption, setSelectedOption] = useState<{
-    value: string;
-    label: string;
-  } | null>(null);
   const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
 
   const fetchData = async (name?: string) => {
@@ -49,7 +48,6 @@ const TagInput = (): JSX.Element => {
 
   const handleOnInputChange = (inputValue: string) => {
     if (!inputValue) {
-      setSelectedOption(null);
       setTimeout(() => setOptions([]), 300);
       return;
     }
@@ -58,13 +56,20 @@ const TagInput = (): JSX.Element => {
 
   return (
     <div className="App">
-      <CreatableSelect
-        isMulti
-        defaultValue={selectedOption}
-        onInputChange={handleOnInputChange}
-        options={options}
-        styles={theme === "dark" ? customStyles : {}}
-        classNamePrefix={theme === "dark" ? "dark" : "light"}
+      <Controller
+        name={"tags"}
+        control={control}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <CreatableSelect
+            isMulti
+            {...field}
+            onInputChange={handleOnInputChange}
+            options={options}
+            styles={theme === "dark" ? customStyles : {}}
+            classNamePrefix={theme === "dark" ? "dark" : "light"}
+          />
+        )}
       />
     </div>
   );

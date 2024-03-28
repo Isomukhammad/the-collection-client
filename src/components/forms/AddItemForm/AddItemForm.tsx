@@ -1,21 +1,51 @@
-import { JSX } from "react";
+import { JSX, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
 
+import { AddItemFormFields } from "@/components/forms/AddItemForm/types.ts";
 import TagInput from "@/components/inputs/TagInput";
 
-const AddItemForm = (): JSX.Element => {
-  const { t } = useTranslation();
-  const { register, handleSubmit } = useForm();
+import { ROUTES } from "@/config/routes.ts";
+import { baseAxios } from "@/utils/axios.ts";
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+const AddItemForm = (): JSX.Element => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { register, control, handleSubmit } = useForm<AddItemFormFields>({
+    defaultValues: {
+      name: "",
+      tags: [],
+    },
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  const onSubmit: SubmitHandler<AddItemFormFields> = async (data): Promise<void> => {
+    setIsLoading(true);
+    try {
+      const tags = data.tags.map((tag) => tag.label);
+      await baseAxios.post("/items", {
+        collection_id: Number(id),
+        name: data.name,
+        tags: tags,
+      });
+      toast.success(t("Item added"));
+      navigate(ROUTES.COLLECTIONS.COLLECTION.replace(":id", String(id)));
+    } catch (error: any) {
+      console.error(error);
+      if (error.response.data.message) setError(error.response.data.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column mt-5 gap-3" noValidate>
-      <TagInput />
+      {error && <p className="text-danger fw-semibold">{error}</p>}
       <Form.Group controlId="formBasicName">
         <Form.Label className="fw-semibold">{t("Name")}</Form.Label>
         <Form.Control
@@ -28,73 +58,11 @@ const AddItemForm = (): JSX.Element => {
       </Form.Group>
       <Form.Group controlId="formBasicTags">
         <Form.Label className="fw-semibold">{t("Tags")}</Form.Label>
-        <Form.Control type="text" placeholder="Enter tags" />
+        <TagInput control={control} />
       </Form.Group>
-      {/* two inputs for name and value. Both inputs in one line and in desktop is grid */}
-      <div className="d-flex flex-column gap-2 align-items-center">
-        <Form.Label className="fw-semibold w-100">{t("Optional text")}</Form.Label>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="number" placeholder={t("Enter value")} className="col" />
-        </div>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="number" placeholder={t("Enter value")} className="col" />
-        </div>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="number" placeholder={t("Enter value")} className="col" />
-        </div>
-      </div>
-      <div className="d-flex flex-column gap-2 align-items-center">
-        <Form.Label className="fw-semibold w-100">{t("Optional text")}</Form.Label>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="text" placeholder={t("Enter value")} className="col" />
-        </div>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="text" placeholder={t("Enter value")} className="col" />
-        </div>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="text" placeholder={t("Enter value")} className="col" />
-        </div>
-      </div>
-      <div className="d-flex flex-column gap-2 align-items-center">
-        <Form.Label className="fw-semibold w-100">
-          {t("Optional text")} ({t("Markdown is supported")})
-        </Form.Label>
-        <div className={"row gap-3 w-100 d-flex align-items-start"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control as="textarea" placeholder={t("Enter value")} className="col" />
-        </div>
-        <div className={"row gap-3 w-100 d-flex align-items-start"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control as="textarea" placeholder={t("Enter value")} className="col" />
-        </div>
-        <div className={"row gap-3 w-100 d-flex align-items-start"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control as="textarea" placeholder={t("Enter value")} className="col" />
-        </div>
-      </div>
-      <div className="d-flex flex-column gap-2 align-items-center">
-        <Form.Label className="fw-semibold w-100">{t("Optional date")}</Form.Label>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="date" className="col" />
-        </div>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="date" className="col" />
-        </div>
-        <div className={"row gap-3 w-100"}>
-          <Form.Control type="text" placeholder={t("Enter name")} className="col" />
-          <Form.Control type="date" className="col" />
-        </div>
-      </div>
-
-      <Button type="submit">{t("Submit")}</Button>
+      <Button type="submit" disabled={isLoading}>
+        {t("Submit")}
+      </Button>
     </Form>
   );
 };

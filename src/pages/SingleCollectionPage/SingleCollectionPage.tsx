@@ -1,16 +1,20 @@
 import { JSX } from "react";
-import { Container, Image } from "react-bootstrap";
+import { Button, Container, Image } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
+import { useAuth } from "@/context/AuthContext.tsx";
 
 import Loader from "@/components/common/Loader";
 
 import { ROUTES } from "@/config/routes";
 import { ICollection } from "@/types.ts";
+import { baseAxios } from "@/utils/axios.ts";
 
 const SingleCollectionPage = (): JSX.Element => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { t } = useTranslation();
   const {
@@ -18,6 +22,7 @@ const SingleCollectionPage = (): JSX.Element => {
     isLoading: collectionLoading,
     isError: collectionError,
   } = useQuery<{ data: ICollection }>(`/collections/${id}`);
+  const { user } = useAuth();
 
   if (collectionLoading)
     return (
@@ -43,14 +48,34 @@ const SingleCollectionPage = (): JSX.Element => {
   const { createdAt } = collection!.data;
   const date = new Date(createdAt);
 
+  const handleDeleteCollection = async (): Promise<void> => {
+    try {
+      await baseAxios.delete(`/collections/${id}`);
+      navigate(ROUTES.AUTH.PROFILE.MAIN);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Container as={"main"} className="my-5">
       <div>
         <div className={"d-flex justify-content-between align-items-center"}>
           <h1>{collection?.data.name}</h1>
-          <Link to={ROUTES.ITEMS.ADDITEM.replace(":id", String(id))} title={t("Add item")} className={"btn btn-info"}>
-            {t("Add item")}
-          </Link>
+          {(collection?.data.authorId === user?.id || user?.role === "ADMIN") && (
+            <div className={"d-flex gap-2"}>
+              <Button variant={"danger"} type={"button"} title={t("Delete")} onClick={handleDeleteCollection}>
+                {t("Delete")}
+              </Button>
+              <Link
+                to={ROUTES.ITEMS.ADDITEM.replace(":id", String(id))}
+                title={t("Add item")}
+                className={"btn btn-info"}
+              >
+                {t("Add item")}
+              </Link>
+            </div>
+          )}
         </div>
         <p className="text-secondary">
           {t("Created at")} {date.toLocaleDateString()} {date.toLocaleTimeString()}

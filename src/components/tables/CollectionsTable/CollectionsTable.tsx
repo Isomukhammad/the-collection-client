@@ -18,7 +18,7 @@ const CollectionsTable = (): JSX.Element => {
     data: collections,
     isLoading: collectionsLoading,
     isError: collectionsError,
-  } = useQuery<{ data: ICollection[] }>(`/collections?authorId=${user?.id}&quantity=5`);
+  } = useQuery<{ data: ICollection[] }>(`/collections?author_id=${user?.id}&quantity=5`);
 
   if (collectionsLoading)
     return (

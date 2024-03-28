@@ -1,5 +1,7 @@
 export interface AddItemFormFields {
   name: string;
-  description: string;
-  image: FileList | null;
+  tags: {
+    value: string;
+    label: string;
+  }[];
 }

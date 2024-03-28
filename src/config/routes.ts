@@ -19,5 +19,6 @@ export const ROUTES = {
     ITEM: "/items/:id",
     ITEMS: "/collections/:id/items",
     ADDITEM: "/collections/:id/add",
+    EDITITEM: "/items/:id/edit",
   },
 };

@@ -40,10 +40,15 @@ export interface IItem {
   createdAt: string;
   collectionId: number;
   authorId: number;
-  author: {
+  author?: {
+    id: number;
     username: string;
   };
-  collection: {
+  collection?: {
+    name: string;
+  };
+  tag?: {
+    id: number;
     name: string;
   };
 }
