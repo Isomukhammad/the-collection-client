@@ -8,6 +8,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext.tsx";
 
 import Loader from "@/components/common/Loader";
+import ItemsTable from "@/components/tables/ItemsTable";
 
 import { ROUTES } from "@/config/routes";
 import { ICollection } from "@/types.ts";
@@ -102,6 +103,7 @@ const SingleCollectionPage = (): JSX.Element => {
         <h2>{t("Description of collection")}:</h2>
         <ReactMarkdown className={"mt-3"}>{collection?.data.description}</ReactMarkdown>
       </article>
+      <ItemsTable title={t("Items")} link={`/items?collection_id=${id}`} />
     </Container>
   );
 };

@@ -7,6 +7,11 @@ export interface IUser {
   role: keyof typeof ROLES;
 }
 
+export interface IAuthor {
+  id: number;
+  username: string;
+}
+
 export interface IUserAdmin extends IUser {
   password: string;
   isBlocked: boolean;
@@ -40,15 +45,12 @@ export interface IItem {
   createdAt: string;
   collectionId: number;
   authorId: number;
-  author?: {
-    id: number;
-    username: string;
-  };
+  author?: IAuthor;
   collection?: {
     name: string;
   };
-  tag?: {
+  tags?: {
     id: number;
     name: string;
-  };
+  }[];
 }

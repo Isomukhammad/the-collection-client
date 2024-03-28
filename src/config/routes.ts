@@ -14,6 +14,7 @@ export const ROUTES = {
     COLLECTION: "/collections/:id",
     USERCOLLECTIONS: "/collections/user/:id",
     ADDCOLLECTION: "/collections/add",
+    // TAG: "/collections/tag/:id",
   },
   ITEMS: {
     ITEM: "/items/:id",

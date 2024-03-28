@@ -21,14 +21,11 @@ const UserCollectionsPage = (): JSX.Element => {
     error: collectionsError,
   } = useQuery<
     {
-      author: {
-        id: number;
-        username: string;
-      };
+      author: string;
       data: ICollection[];
     },
     AxiosError<{ message: string }>
-  >(`/collections?authorId=${id}`);
+  >(`/collections?author_id=${id}`);
 
   if (collectionsLoading)
     return (
@@ -52,21 +49,19 @@ const UserCollectionsPage = (): JSX.Element => {
 
   return (
     <Container as={"main"} className={"my-5"}>
-      <h1>{t("UserCollections", { name: collections?.author.username })}</h1>
+      <h1>{t("UserCollections", { name: collections?.author })}</h1>
       <div className={"row mt-3"}>
         {collections?.data.length ? (
-          collections.data.map((collection) => {
-            return (
-              <div key={collection.id} className={"col-lg-3 col-md-4 col-sm-6 mb-3"}>
-                <CollectionCard
-                  id={collection.id}
-                  name={collection.name}
-                  img={collection.img}
-                  description={collection.description}
-                />
-              </div>
-            );
-          })
+          collections.data.map((collection) => (
+            <div key={collection.id} className={"col-lg-3 col-md-4 col-sm-6 mb-3"}>
+              <CollectionCard
+                id={collection.id}
+                name={collection.name}
+                img={collection.img}
+                description={collection.description}
+              />
+            </div>
+          ))
         ) : (
           <p className={"text-info fw-semibold"}>{t("Collections are empty")}</p>
         )}

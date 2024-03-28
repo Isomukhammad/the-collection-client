@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { ItemsTableProps } from "@/components/tables/ItemsTable";
 
 import { ROUTES } from "@/config/routes.ts";
-import { IItem } from "@/types.ts";
+import { IAuthor, IItem } from "@/types.ts";
 
 const ItemsTable = ({ link, title }: ItemsTableProps): JSX.Element => {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ const ItemsTable = ({ link, title }: ItemsTableProps): JSX.Element => {
             <th scope="col">#</th>
             <th scope="col">{t("Name")}</th>
             <th scope="col">{t("Collection")}</th>
-            <th scope="col">{t("Auhtor")}</th>
+            <th scope="col">{t("Author")}</th>
             <th scope="col">{t("Created at")}</th>
             <th scope="col"></th>
           </tr>
