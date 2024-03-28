@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { ItemsTableProps } from "@/components/tables/ItemsTable";
 
 import { ROUTES } from "@/config/routes.ts";
-import { IAuthor, IItem } from "@/types.ts";
+import { IItem } from "@/types.ts";
 
 const ItemsTable = ({ link, title }: ItemsTableProps): JSX.Element => {
   const { t } = useTranslation();

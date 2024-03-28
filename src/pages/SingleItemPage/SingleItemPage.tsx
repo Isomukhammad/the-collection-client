@@ -9,7 +9,7 @@ import { useAuth } from "@/context/AuthContext.tsx";
 import Loader from "@/components/common/Loader";
 
 import { ROUTES } from "@/config/routes.ts";
-import { IAuthor, IItem } from "@/types.ts";
+import { IItem } from "@/types.ts";
 
 const SingleItemPage = (): JSX.Element => {
   const { id } = useParams();
