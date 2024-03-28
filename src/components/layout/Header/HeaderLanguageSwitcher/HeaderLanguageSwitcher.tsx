@@ -1,5 +1,6 @@
 import { JSX } from "react";
 import { Dropdown } from "react-bootstrap";
+import { Globe } from "react-bootstrap-icons";
 import { useTranslation } from "react-i18next";
 
 const HeaderLanguageSwitcher = (): JSX.Element => {
@@ -12,7 +13,12 @@ const HeaderLanguageSwitcher = (): JSX.Element => {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant={"outline-secondary"} id="dropdown-basic" className={"w-100"}>
+      <Dropdown.Toggle
+        variant={"outline-secondary"}
+        id="dropdown-basic"
+        className={"w-100 d-flex align-items-center gap-1 justify-content-center"}
+      >
+        <Globe />
         <span className={"text-uppercase"}>{i18n.language}</span>
       </Dropdown.Toggle>
 
