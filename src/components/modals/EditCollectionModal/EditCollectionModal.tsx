@@ -71,7 +71,7 @@ const EditCollectionModal = ({ id, name, topic, description, refetch }: EditColl
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">{t("Edit user info")}</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">{t("Edit collection info")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit(onSubmit)}>

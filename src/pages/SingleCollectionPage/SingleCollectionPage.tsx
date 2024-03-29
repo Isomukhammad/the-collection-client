@@ -56,7 +56,7 @@ const SingleCollectionPage = (): JSX.Element => {
       await baseAxios.delete(`/collections/${id}`);
       navigate(ROUTES.AUTH.PROFILE.MAIN);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

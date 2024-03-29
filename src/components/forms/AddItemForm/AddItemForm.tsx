@@ -50,7 +50,7 @@ const AddItemForm = (): JSX.Element => {
         <Form.Label className="fw-semibold">{t("Name")}</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Enter name"
+          placeholder={t("Enter name")}
           {...register("name", {
             required: true,
           })}
