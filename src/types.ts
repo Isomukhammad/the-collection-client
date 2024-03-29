@@ -22,7 +22,7 @@ export interface ICollection {
   id: number;
   name: string;
   description: string;
-  topic: string;
+  topic: "Books" | "Signs" | "Silverware";
   img: string;
   authorId: number;
   createdAt: string;
